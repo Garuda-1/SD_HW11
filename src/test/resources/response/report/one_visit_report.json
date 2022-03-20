@@ -1,0 +1,8 @@
+{
+  "formedAt": "2022-01-01T13:00:00",
+  "visitsByDay": {
+    "2022-01-01": 1
+  },
+  "averageVisitsCount": 1.0,
+  "averageVisitsTimeMinutes": 60.0
+}

@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "8008:5432"
+    environment:
+      POSTGRES_DB: gym
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres

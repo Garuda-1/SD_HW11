@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+    .createPass {
+        margin: 1rem;
+    }
+
+    .pass {
+        margin: 1rem;
+        border: 2px solid black;
+        border-radius: 1rem;
+        max-width: 24rem;
+        padding: 0.5rem;
+    }
+    .pass form {
+        width: 20%;
+    }
+    .pass form button {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gym administration system</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+
+<div class="createPass">
+    <form id="new-pass" onsubmit="return true" method="POST" action="/administrator">
+        <label>
+            <input type="number" th:name="days">
+        </label>
+        <input type="submit" value="Create new pass">
+    </form>
+</div>
+
+<th:block th:each="pass : ${passes}">
+    <div class="pass">
+        <div th:text="${'Pass: ' + pass.getId()}"></div>
+        <div th:text="${pass.isRevoked()} ? 'Revoked' : ${'Valid until: ' + pass.getValidUntil()?.toString()}"></div>
+        <form id="update-pass-valid-until" method="POST" action="/administrator/updateValidUntil">
+            <input type="date" name="newValidUntil">
+            <input type="hidden" name="passId" th:value="${pass.getId()}">
+            <input type="submit" value="Update valid until date">
+        </form>
+        <form id="revoke-pass" method="POST" action="/administrator/revoke">
+            <input type="hidden" th:value="${pass.getId()}" name="passId"/>
+            <button type="submit" th:disabled="${pass.isRevoked()}" th:value="${pass.getId()}" name="passId">Revoke</button>
+        </form>
+    </div>
+</th:block>
+
+<script>
+    $("form").submit(function (e) {
+        e.preventDefault();
+        setTimeout(function() {
+            window.location.reload();
+        }, 0);
+        this.submit();
+    });
+</script>
+
+</body>
+</html>
